@@ -123,19 +123,7 @@ const getCompaniesWithFilter = async (req, res) => {
         { "address.zip": { $regex: new RegExp(req.body.search, "i") } },
       ];
     }
-    const companyList = await companyModel.aggregate([
-      { $match: matchData },
-      {
-        $project: {
-          _id: 1,
-          name: 1,
-          email: 1,
-          address: 1,
-          contact: 1,
-          status: 1,
-        },
-      },
-    ]);
+    const companyList = await companyModel.find(matchData);
     return response.success("Company list", companyList, res);
   } catch (error) {
     return response.failure(error, res);

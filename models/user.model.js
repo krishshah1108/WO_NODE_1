@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
         required: true,
       },
     ],
-    code: { type: Number, default: '' },
+    code: { type: Number, default: null },
     refreshToken: { type: String, default: '' },
   },
   { timestamps: true, versionKey: false },

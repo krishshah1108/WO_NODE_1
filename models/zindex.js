@@ -3,5 +3,5 @@ import Company from './company.model.js';
 
 export const models = {
   User,
-  Company,
+  Company
 };

@@ -1,6 +1,6 @@
 import { models } from '../../../models/zindex.js';
 import response from '../../../utils/response.util.js';
-import {companyValidator} from '../validator/company.validator.js';
+import { companyValidator } from '../validator/company.validator.js';
 const createCompany = async (req, res) => {
   try {
     const { error } = companyValidator.createCompanySchema.validate(req.body);

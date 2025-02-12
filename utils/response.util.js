@@ -6,7 +6,7 @@ const response = {
       status: statusCode.SUCCESS,
       message: message || 'Your request is successfully executed',
       data,
-      isSuccess: true,
+      isSuccess: true
     });
   },
 
@@ -15,7 +15,7 @@ const response = {
       status: statusCode.CREATED,
       message: message || 'Your request is successfully executed',
       data,
-      isSuccess: true,
+      isSuccess: true
     });
   },
 
@@ -23,22 +23,22 @@ const response = {
     return res.status(statusCode.BAD_REQUEST).json({
       status: statusCode.BAD_REQUEST,
       message: message || 'Your request failed!',
-      isSuccess: false,
+      isSuccess: false
     });
   },
-  
+
   validationErr: (message, res) => {
     return res.status(statusCode.VALIDATION_ERROR).json({
       status: statusCode.VALIDATION_ERROR,
       message: message || 'Validation Error!',
-      isSuccess: false,
+      isSuccess: false
     });
   },
   unauthorized: (res) => {
     return res.status(statusCode.UNAUTHORIZED).json({
       status: statusCode.UNAUTHORIZED,
       message: 'Unauthorized User ! Access denied!',
-      isSuccess: false,
+      isSuccess: false
     });
   },
 
@@ -46,7 +46,7 @@ const response = {
     return res.status(statusCode.FORBIDDEN).json({
       status: statusCode.FORBIDDEN,
       message: 'Forbidden User ! Access denied!',
-      isSuccess: false,
+      isSuccess: false
     });
   },
 
@@ -54,7 +54,7 @@ const response = {
     return res.status(statusCode.NOT_FOUND).json({
       status: statusCode.NOT_FOUND,
       message: 'Resource not found!',
-      isSuccess: false,
+      isSuccess: false
     });
   },
 
@@ -63,9 +63,9 @@ const response = {
     return res.status(statusCode.SERVER_ERROR).json({
       status: statusCode.SERVER_ERROR,
       message: error.message || 'Internal Server Error!',
-      isSuccess: false,
+      isSuccess: false
     });
-  },
+  }
 };
 
 export default response;

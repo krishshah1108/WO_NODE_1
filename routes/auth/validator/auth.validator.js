@@ -3,7 +3,7 @@ import Joi from 'joi';
 const userRegistrationSchema = Joi.object({
   name: Joi.object({
     firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
+    lastName: Joi.string().required()
   }).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
@@ -16,15 +16,15 @@ const userRegistrationSchema = Joi.object({
     .items(Joi.string().regex(/^[0-9a-fA-F]{24}$/))
     .required(),
   code: Joi.number().optional().allow(null).default(null),
-  refreshToken: Joi.string().optional(),
+  refreshToken: Joi.string().optional()
 }).options({ allowUnknown: true });
 
 const userLoginSchema = Joi.object({
   email: Joi.string().email().lowercase().required(),
-  password: Joi.string().required(),
+  password: Joi.string().required()
 });
 
 export const authValidator = {
   userRegistrationSchema,
-  userLoginSchema,
+  userLoginSchema
 };

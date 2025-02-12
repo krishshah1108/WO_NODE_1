@@ -11,12 +11,12 @@ export const loggerMiddleware = morgan(
         method: tokens.method(req, res),
         url: tokens.url(req, res),
         status: tokens.status(req, res),
-        responseTime: `${tokens['response-time'](req, res)} ms`,
+        responseTime: `${tokens['response-time'](req, res)} ms`
       },
-      timestamp: new Date().toISOString(),
+      timestamp: new Date().toISOString()
     });
   },
   {
-    stream: { write: (message) => logger.info(JSON.parse(message)) },
-  },
+    stream: { write: (message) => logger.info(JSON.parse(message)) }
+  }
 );

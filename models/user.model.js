@@ -4,14 +4,14 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       firstName: { type: String, required: true },
-      lastName: { type: String, required: true },
+      lastName: { type: String, required: true }
     },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     designation: {
       type: String,
       required: true,
-      enum: ['SUPER_ADMIN', 'MANAGER', 'TEAM_LEADER', 'DEVELOPER'],
+      enum: ['SUPER_ADMIN', 'MANAGER', 'TEAM_LEADER', 'DEVELOPER']
     },
     companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true },
     isVerified: { type: Boolean, default: false },
@@ -19,13 +19,13 @@ const userSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
-      },
+        required: true
+      }
     ],
     code: { type: Number, default: null },
-    refreshToken: { type: String, default: '' },
+    refreshToken: { type: String, default: '' }
   },
-  { timestamps: true, versionKey: false },
+  { timestamps: true, versionKey: false }
 );
 
 const User = mongoose.model('User', userSchema);

@@ -9,10 +9,10 @@ const loggerSchema = new mongoose.Schema(
       method: { type: String, required: true },
       url: { type: String, required: true },
       status: { type: Number, required: true },
-      responseTime: { type: String, required: true },
-    },
+      responseTime: { type: String, required: true }
+    }
   },
-  { timestamps: true, versionKey: false },
+  { timestamps: true, versionKey: false }
 );
 
 const Logger = mongoose.model('Logger', loggerSchema);

@@ -1,12 +1,7 @@
-import {models} from '../../../models/zindex.js';
+import { models } from '../../../models/zindex.js';
 import response from '../../../utils/response.util.js';
 import jwt from 'jsonwebtoken';
-import {
-  encryptor,
-  decryptor,
-  generateAccessToken,
-  generateRefreshToken,
-} from '../../../utils/helper.util.js';
+import { encryptor, decryptor, generateAccessToken, generateRefreshToken } from '../../../utils/helper.util.js';
 import { authValidator } from '../validator/auth.validator.js';
 const registerUser = async (req, res) => {
   try {
@@ -25,7 +20,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      designation,
+      designation
     });
     await newUser.save();
     return response.success('User registered successfully', 1, res);
@@ -53,14 +48,14 @@ const loginUser = async (req, res) => {
     const accessToken = generateAccessToken({ id: isExist._id, designation: isExist.designation });
     const refreshToken = generateRefreshToken({
       id: isExist._id,
-      designation: isExist.designation,
+      designation: isExist.designation
     });
     await userModel.findOneAndUpdate({ _id: isExist._id }, { refreshToken });
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000
     });
     return response.success('User logged in successfully', { accessToken }, res);
   } catch (error) {
@@ -87,7 +82,7 @@ const getNewAccessToken = async (req, res) => {
       }
       const accessToken = generateAccessToken({
         id: isExist._id,
-        designation: isExist.designation,
+        designation: isExist.designation
       });
       return response.success('Access token generated successfully', { accessToken }, res);
     });

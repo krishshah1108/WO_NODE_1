@@ -10,12 +10,12 @@ const companySchema = new mongoose.Schema(
       city: { type: String, required: true },
       state: { type: String, required: true },
       country: { type: String, required: true },
-      zip: { type: String, required: true, match: [/^\d{6}$/, 'Invalid zip code'] },
+      zip: { type: String, required: true, match: [/^\d{6}$/, 'Invalid zip code'] }
     },
     contact: { type: String, required: true, match: [/^\d{10}$/, 'Invalid phone number'] },
-    status: { type: String, required: true, enum: ['active', 'inactive'] },
+    status: { type: String, required: true, enum: ['active', 'inactive'] }
   },
-  { timestamps: true, versionKey: false },
+  { timestamps: true, versionKey: false }
 );
 
 const Company = mongoose.model('Company', companySchema);

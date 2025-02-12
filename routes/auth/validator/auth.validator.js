@@ -8,13 +8,9 @@ const userRegistrationSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   designation: Joi.string().valid('SUPER_ADMIN', 'MANAGER', 'TEAM_LEADER', 'DEVELOPER').required(),
-  companyId: Joi.string()
-    .regex(/^[0-9a-fA-F]{24}$/)
-    .required(),
-  isVerified: Joi.boolean().required(),
-  reporters: Joi.array()
-    .items(Joi.string().regex(/^[0-9a-fA-F]{24}$/))
-    .required(),
+  companyId: Joi.string().regex(/^[0-9a-fA-F]{24}$/),
+  isVerified: Joi.boolean().default(false),
+  reporters: Joi.array().items(Joi.string().regex(/^[0-9a-fA-F]{24}$/)),
   code: Joi.number().optional().allow(null).default(null),
   refreshToken: Joi.string().optional()
 }).options({ allowUnknown: true });

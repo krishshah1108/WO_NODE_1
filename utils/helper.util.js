@@ -1,10 +1,15 @@
-import crypto from 'cryptojs';
-
+import crypto from 'crypto-js';
+import jwt from 'jsonwebtoken';
 export const encryptor = (text) => {
-  return crypto.AES.encrypt(text, process.env.PASSWORD_SECRET).toString();
+  const ciphertext = crypto.AES.encrypt(text, process.env.PASSWORD_SECRET).toString();
+  return ciphertext;
 };
+
 export const decryptor = (text) => {
-  return crypto.AES.decrypt(text, process.env.PASSWORD_SECRET).toString(crypto.enc.Utf8);
+  const decodedText = decodeURIComponent(text);
+  const bytes = crypto.AES.decrypt(decodedText, process.env.PASSWORD_SECRET);
+  const decryptedText = bytes.toString(crypto.enc.Utf8);
+  return decryptedText;
 };
 
 export const generateAccessToken = (payload) => {

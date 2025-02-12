@@ -9,7 +9,7 @@ const registerUser = async (req, res) => {
     if (error) {
       return response.validationErr(error.details[0].message, res);
     }
-    const { name, email, password, designation } = req.body;
+    const { name, email, password, designation, code } = req.body;
     const userModel = models.User;
     const isExist = await userModel.findOne({ email: email.toLowerCase() });
     if (isExist) {
@@ -20,7 +20,8 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      designation
+      designation,
+      code
     });
     await newUser.save();
     return response.success('User registered successfully', 1, res);
@@ -65,11 +66,12 @@ const loginUser = async (req, res) => {
 
 const getNewAccessToken = async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers.authorization || req.headers.Authorization;
     if (!authHeader || !authHeader.startsWith('Basic ')) {
       return response.unauthorized(res);
     }
-    const refreshToken = authHeader.split(' ')[1];
+    let refreshToken = authHeader.split(' ')[1];
+    refreshToken = decryptor(refreshToken);
     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (error, payload) => {
       if (error) {
         return response.unauthorized(res);
@@ -83,6 +85,16 @@ const getNewAccessToken = async (req, res) => {
       const accessToken = generateAccessToken({
         id: isExist._id,
         designation: isExist.designation
+      });
+      const newRefreshToken = generateRefreshToken({
+        id: isExist._id,
+        designation: isExist.designation
+      });
+      await userModel.findOneAndUpdate({ _id: isExist._id }, { refreshToken: newRefreshToken });
+      res.cookie('refreshToken', newRefreshToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'strict'
       });
       return response.success('Access token generated successfully', { accessToken }, res);
     });
@@ -104,7 +116,7 @@ const logoutUser = async (req, res) => {
     }
     await userModel.findOneAndUpdate({ _id: isExist._id }, { refreshToken: '' });
     res.clearCookie('refreshToken');
-    return response.success('User logged out successfully', res);
+    return response.success('User logged out successfully',1, res);
   } catch (error) {
     return response.failure(error, res);
   }

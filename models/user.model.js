@@ -13,13 +13,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       enum: ['SUPER_ADMIN', 'MANAGER', 'TEAM_LEADER', 'DEVELOPER']
     },
-    companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true },
+    companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     isVerified: { type: Boolean, default: false },
     reporters: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        ref: 'User'
       }
     ],
     code: { type: Number, default: null },

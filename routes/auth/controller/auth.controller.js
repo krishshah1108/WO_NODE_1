@@ -1,4 +1,4 @@
-import models from '../../../models/zindex.js';
+import {models} from '../../../models/zindex.js';
 import response from '../../../utils/response.util.js';
 import jwt from 'jsonwebtoken';
 import {

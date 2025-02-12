@@ -1,11 +1,11 @@
-import { models } from '../../../models/zindex';
-import response from '../../../utils/response.util';
+import { models } from '../../../models/zindex.js';
+import response from '../../../utils/response.util.js';
 
 const getAllEmployees = async (req, res) => {
   try {
     const userModel = models.User;
     const employeeList = await userModel.find({
-      designation: { $ne: 'SUPER_ADMIN' },
+      designation: { $ne: 'SUPER_ADMIN' }
     });
     return response.success('Employee list', employeeList, res);
   } catch (error) {
@@ -77,14 +77,14 @@ const getListOfEmployee = async (req, res) => {
     if (req.body.name) {
       matchData.$or = [
         { 'name.firstName': { $regex: new RegExp(req.body.name, 'i') } },
-        { 'name.lastName': { $regex: new RegExp(req.body.name, 'i') } },
+        { 'name.lastName': { $regex: new RegExp(req.body.name, 'i') } }
       ];
     }
     if (req.body.search) {
       const companyModel = models.Company;
       const companyList = await companyModel
         .find({
-          name: { $regex: new RegExp(req.body.search, 'i') },
+          name: { $regex: new RegExp(req.body.search, 'i') }
         })
         .select('_id');
       const companyIds = companyList.map((company) => company._id);
@@ -93,7 +93,7 @@ const getListOfEmployee = async (req, res) => {
         { 'name.lastName': { $regex: new RegExp(req.body.search, 'i') } },
         { email: { $regex: new RegExp(req.body.search, 'i') } },
         { designation: { $regex: new RegExp(req.body.search, 'i') } },
-        { companyId: { $in: companyIds } },
+        { companyId: { $in: companyIds } }
       ];
     }
     const employeeList = await userModel.find(matchData);
@@ -109,5 +109,5 @@ export const employeeController = {
   deleteEmployee,
   updateEmployeeDetails,
   setCompanyOfEmployee,
-  getListOfEmployee,
+  getListOfEmployee
 };
